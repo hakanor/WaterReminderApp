@@ -95,44 +95,29 @@ class ViewController: UIViewController {
     
     @objc private func handleGestureGlass(_ sender: UITapGestureRecognizer? = nil) {
         print("tapped")
-        self.waterWaveView.progress += 0.1
-        self.waterWaveView.setupProgress(self.waterWaveView.progress)
-        print(self.waterWaveView.progress)
-    }
-    
-    @objc private func handleGestureFlask(_ sender: UITapGestureRecognizer? = nil) {
-        print("tapped")
-        self.waterWaveView.progress += 0.2
+        self.waterWaveView.addProgress(0.1)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
         print(self.waterWaveView.progress)
     }
     
     @objc private func handleGestureBottle(_ sender: UITapGestureRecognizer? = nil) {
         print("tapped")
-        self.waterWaveView.progress += 0.3
+        self.waterWaveView.addProgress(0.2)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
         print(self.waterWaveView.progress)
     }
     
+    @objc private func handleGestureFlask(_ sender: UITapGestureRecognizer? = nil) {
+        print("tapped")
+        self.waterWaveView.addProgress(0.3)
+        self.waterWaveView.setupProgress(self.waterWaveView.progress)
+        print(self.waterWaveView.progress)
+    }
+    
+ 
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        timer = Timer.scheduledTimer(withTimeInterval: 0.01, repeats: true, block: { _ in
-//            let dr = CGFloat(1.0 / (self.dr/0.01))
-//            self.waterWaveView.progress += dr
-//            self.waterWaveView.setupProgress(self.waterWaveView.progress)
-//            print(self.waterWaveView.progress)
-//
-//            if self.waterWaveView.progress >= 1 {
-//
-////                self.timer?.invalidate()
-////                self.timer = nil
-////
-////                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-////                    self.waterWaveView.percentAnim()
-////                }
-//            }
-//
-//        })
     }
 
 

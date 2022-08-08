@@ -100,6 +100,22 @@ extension WaterWaveView {
         percentLabel.layer.add(anim, forKey: nil)
     }
     
+    func addProgress(_ pr: CGFloat) {
+        if(progress <= 1 && (progress+pr) <= 1 ){
+            progress += pr
+        }
+        
+        else if(progress+pr > 1 ){
+            progress = 1
+        }
+        
+        if progress >= 1 {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                self.percentAnim()
+            }
+        }
+    }
+    
     func setupProgress(_ pr: CGFloat) {
         progress = pr
         percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr*100)).intValue)

@@ -39,6 +39,41 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A74B1AA628A1A6220081F06F /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				A784496C289C4179009AFE0B /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A74B1AA728A1A6330081F06F /* App */ = {
+			isa = PBXGroup;
+			children = (
+				A7844960289C4171009AFE0B /* AppDelegate.swift */,
+				A7844962289C4171009AFE0B /* SceneDelegate.swift */,
+				A784496E289C4179009AFE0B /* LaunchScreen.storyboard */,
+				A7844971289C4179009AFE0B /* Info.plist */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		A74B1AA828A1A63C0081F06F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A74B1AA928A1A6480081F06F /* Screens */ = {
+			isa = PBXGroup;
+			children = (
+				A7844964289C4171009AFE0B /* ViewController.swift */,
+				A74B1AA328A134660081F06F /* WaterWaveView.swift */,
+			);
+			path = Screens;
+			sourceTree = "<group>";
+		};
 		A7844954289C4171009AFE0B = {
 			isa = PBXGroup;
 			children = (
@@ -58,14 +93,11 @@
 		A784495F289C4171009AFE0B /* WaterTrackerApp */ = {
 			isa = PBXGroup;
 			children = (
-				A7844960289C4171009AFE0B /* AppDelegate.swift */,
-				A7844962289C4171009AFE0B /* SceneDelegate.swift */,
-				A7844964289C4171009AFE0B /* ViewController.swift */,
-				A784496C289C4179009AFE0B /* Assets.xcassets */,
-				A784496E289C4179009AFE0B /* LaunchScreen.storyboard */,
-				A7844971289C4179009AFE0B /* Info.plist */,
+				A74B1AA928A1A6480081F06F /* Screens */,
+				A74B1AA828A1A63C0081F06F /* Extensions */,
+				A74B1AA628A1A6220081F06F /* Resources */,
+				A74B1AA728A1A6330081F06F /* App */,
 				A7844969289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld */,
-				A74B1AA328A134660081F06F /* WaterWaveView.swift */,
 			);
 			path = WaterTrackerApp;
 			sourceTree = "<group>";
