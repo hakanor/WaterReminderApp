@@ -103,8 +103,9 @@ extension WaterWaveView {
     func setupProgress(_ pr: CGFloat) {
         progress = pr
         percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr*100)).intValue)
-        
+//        percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr)).intValue)
         let top: CGFloat = pr * bounds.size.height
+//        let top: CGFloat = pr * bounds.size.height / 100
         firstLayer.setValue(width-top, forKeyPath: "position.y")
         secondLayer.setValue(width-top, forKeyPath: "position.y")
         
