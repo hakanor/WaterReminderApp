@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A74B1AA428A134660081F06F /* WaterWaveView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A74B1AA328A134660081F06F /* WaterWaveView.swift */; };
 		A7844961289C4171009AFE0B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7844960289C4171009AFE0B /* AppDelegate.swift */; };
 		A7844963289C4171009AFE0B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7844962289C4171009AFE0B /* SceneDelegate.swift */; };
 		A7844965289C4171009AFE0B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7844964289C4171009AFE0B /* ViewController.swift */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A74B1AA328A134660081F06F /* WaterWaveView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaterWaveView.swift; sourceTree = "<group>"; };
 		A784495D289C4171009AFE0B /* WaterTrackerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WaterTrackerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7844960289C4171009AFE0B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A7844962289C4171009AFE0B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				A784496E289C4179009AFE0B /* LaunchScreen.storyboard */,
 				A7844971289C4179009AFE0B /* Info.plist */,
 				A7844969289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld */,
+				A74B1AA328A134660081F06F /* WaterWaveView.swift */,
 			);
 			path = WaterTrackerApp;
 			sourceTree = "<group>";
@@ -137,6 +140,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A74B1AA428A134660081F06F /* WaterWaveView.swift in Sources */,
 				A784496B289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld in Sources */,
 				A7844965289C4171009AFE0B /* ViewController.swift in Sources */,
 				A7844961289C4171009AFE0B /* AppDelegate.swift in Sources */,
