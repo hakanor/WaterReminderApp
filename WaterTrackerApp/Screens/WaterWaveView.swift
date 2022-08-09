@@ -19,7 +19,8 @@ class WaterWaveView: UIView {
     
     private let twoPi: CGFloat = .pi*2
     private var offset: CGFloat = 0.0
-    private let width = screenWidth * 0.5
+    private let width = screenWidth
+    private let height = screenHeight
     
     var showSingleWave = false
     private var start = false
@@ -42,16 +43,13 @@ class WaterWaveView: UIView {
 
 extension WaterWaveView {
     private func setupViews(){
-        bounds = CGRect(x: 0, y: 0, width: min(width,width), height: min(width, width))
+        bounds = CGRect(x: 0, y: 0, width: screenWidth, height: screenHeight)
         clipsToBounds = true
         backgroundColor = .clear
         translatesAutoresizingMaskIntoConstraints = false
-        layer.cornerRadius = width/3
         layer.masksToBounds = true
-        layer.borderColor = UIColor.lightGray.cgColor
-        layer.borderWidth = 1.0
         
-        waveHeight = 8.0
+        waveHeight = 6.0
         firstColor = .cyan
         secondColor = .cyan.withAlphaComponent(0.4)
         createFirstLayer()
@@ -121,9 +119,9 @@ extension WaterWaveView {
         percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr*100)).intValue)
 //        percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr)).intValue)
         let top: CGFloat = pr * bounds.size.height
-//        let top: CGFloat = pr * bounds.size.height / 100
-        firstLayer.setValue(width-top, forKeyPath: "position.y")
-        secondLayer.setValue(width-top, forKeyPath: "position.y")
+//        let top: CGFloat = pr * bounds.size.height * targetAmount
+        firstLayer.setValue(height-top, forKeyPath: "position.y")
+        secondLayer.setValue(height-top, forKeyPath: "position.y")
         
         if !start{
             DispatchQueue.main.async {

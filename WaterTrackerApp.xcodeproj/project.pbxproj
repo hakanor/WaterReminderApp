@@ -14,6 +14,7 @@
 		A784496B289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A7844969289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld */; };
 		A784496D289C4179009AFE0B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A784496C289C4179009AFE0B /* Assets.xcassets */; };
 		A7844970289C4179009AFE0B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A784496E289C4179009AFE0B /* LaunchScreen.storyboard */; };
+		A7CA765728A26C3F009CB525 /* DataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7CA765628A26C3F009CB525 /* DataService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		A784496C289C4179009AFE0B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A784496F289C4179009AFE0B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A7844971289C4179009AFE0B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A7CA765628A26C3F009CB525 /* DataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,7 +55,6 @@
 				A7844960289C4171009AFE0B /* AppDelegate.swift */,
 				A7844962289C4171009AFE0B /* SceneDelegate.swift */,
 				A784496E289C4179009AFE0B /* LaunchScreen.storyboard */,
-				A7844971289C4179009AFE0B /* Info.plist */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -70,6 +71,7 @@
 			children = (
 				A7844964289C4171009AFE0B /* ViewController.swift */,
 				A74B1AA328A134660081F06F /* WaterWaveView.swift */,
+				A7CA765628A26C3F009CB525 /* DataService.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -98,6 +100,7 @@
 				A74B1AA628A1A6220081F06F /* Resources */,
 				A74B1AA728A1A6330081F06F /* App */,
 				A7844969289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld */,
+				A7844971289C4179009AFE0B /* Info.plist */,
 			);
 			path = WaterTrackerApp;
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 				A74B1AA428A134660081F06F /* WaterWaveView.swift in Sources */,
 				A784496B289C4171009AFE0B /* WaterTrackerApp.xcdatamodeld in Sources */,
 				A7844965289C4171009AFE0B /* ViewController.swift in Sources */,
+				A7CA765728A26C3F009CB525 /* DataService.swift in Sources */,
 				A7844961289C4171009AFE0B /* AppDelegate.swift in Sources */,
 				A7844963289C4171009AFE0B /* SceneDelegate.swift in Sources */,
 			);
@@ -315,6 +319,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZB5WTQ7UH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WaterTrackerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -341,6 +346,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = RZB5WTQ7UH;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = WaterTrackerApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

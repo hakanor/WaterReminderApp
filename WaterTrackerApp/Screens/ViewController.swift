@@ -7,9 +7,13 @@
 
 import UIKit
 let screenWidth = UIScreen.main.bounds.size.width
+let screenHeight = UIScreen.main.bounds.size.height
+var targetAmount = 2700.0
 
 class ViewController: UIViewController {
     
+    // MARK: - Properties
+    let waterStore = DataService()
     let waterWaveView = WaterWaveView()
     
     let dr: TimeInterval = 10.0
@@ -23,10 +27,19 @@ class ViewController: UIViewController {
         return view
     }()
     
+    private lazy var waterLabel: UILabel = {
+        let label = UILabel()
+        label.text = String(targetAmount)
+        label.font = .systemFont(ofSize: 36, weight: .regular)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var glass: UIImageView = {
         let icon = UIImageView()
         var image = UIImage(named:"Glass")
-        icon.backgroundColor = .gray
+        icon.backgroundColor = UIColor(red: 33/255, green: 30/255, blue: 36/255, alpha: 1)
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
@@ -38,7 +51,7 @@ class ViewController: UIViewController {
     private lazy var bottle: UIImageView = {
         let icon = UIImageView()
         var image = UIImage(named:"Bottle")
-        icon.backgroundColor = .gray
+        icon.backgroundColor = UIColor(red: 33/255, green: 30/255, blue: 36/255, alpha: 1)
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
@@ -50,7 +63,7 @@ class ViewController: UIViewController {
     private lazy var flask: UIImageView = {
         let icon = UIImageView()
         var image = UIImage(named:"Flask")
-        icon.backgroundColor = .gray
+        icon.backgroundColor = UIColor(red: 33/255, green: 30/255, blue: 36/255, alpha: 1)
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
@@ -63,25 +76,31 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        [waterWaveView , containerView].forEach(view.addSubview)
+        view.backgroundColor = .black
+        
+        [waterWaveView , containerView, waterLabel].forEach(view.addSubview)
         waterWaveView.setupProgress(waterWaveView.progress)
         
-        waterWaveView.widthAnchor.constraint(equalToConstant: screenWidth * 0.5).isActive = true
-        waterWaveView.heightAnchor.constraint(equalToConstant: screenWidth * 0.5).isActive = true
+        waterLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        waterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+       
+        waterWaveView.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
+        waterWaveView.heightAnchor.constraint(equalToConstant: screenHeight).isActive = true
+        waterWaveView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         waterWaveView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        waterWaveView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         
         [glass , bottle, flask].forEach(view.addSubview)
         
-        glass.topAnchor.constraint(equalTo: waterWaveView.bottomAnchor,constant: 26).isActive = true
+        glass.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -30).isActive = true
         glass.trailingAnchor.constraint(equalTo: bottle.leadingAnchor,constant: -16).isActive = true
 
-        bottle.topAnchor.constraint(equalTo: waterWaveView.bottomAnchor,constant: 26).isActive = true
+        bottle.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -30).isActive = true
         bottle.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
   
-        flask.topAnchor.constraint(equalTo: waterWaveView.bottomAnchor,constant: 26).isActive = true
+        flask.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -30).isActive = true
         flask.leadingAnchor.constraint(equalTo: bottle.trailingAnchor,constant: 16).isActive = true
-
+        view.sendSubviewToBack(waterWaveView)
+        
         let tapGestureBottle = UITapGestureRecognizer(target: self, action:#selector(handleGestureBottle(_:)))
         bottle.addGestureRecognizer(tapGestureBottle)
 
@@ -95,21 +114,23 @@ class ViewController: UIViewController {
     
     @objc private func handleGestureGlass(_ sender: UITapGestureRecognizer? = nil) {
         print("tapped")
-        self.waterWaveView.addProgress(0.1)
+        self.waterWaveView.addProgress(200/targetAmount)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
+        targetAmount -= 200
+        waterLabel.text = String(targetAmount)
         print(self.waterWaveView.progress)
     }
     
     @objc private func handleGestureBottle(_ sender: UITapGestureRecognizer? = nil) {
         print("tapped")
-        self.waterWaveView.addProgress(0.2)
+        self.waterWaveView.addProgress(500/targetAmount)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
         print(self.waterWaveView.progress)
     }
     
     @objc private func handleGestureFlask(_ sender: UITapGestureRecognizer? = nil) {
         print("tapped")
-        self.waterWaveView.addProgress(0.3)
+        self.waterWaveView.addProgress(800/targetAmount)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
         print(self.waterWaveView.progress)
     }
