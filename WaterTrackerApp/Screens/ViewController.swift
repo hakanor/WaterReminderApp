@@ -8,13 +8,14 @@
 import UIKit
 let screenWidth = UIScreen.main.bounds.size.width
 let screenHeight = UIScreen.main.bounds.size.height
-var targetAmount = 2700.0
+let targetAmount = 2700.0
 
 class ViewController: UIViewController {
     
     // MARK: - Properties
     let waterStore = DataService()
     let waterWaveView = WaterWaveView()
+    var remainingAmount : Double = 0
     
     let dr: TimeInterval = 10.0
     var timer: Timer?
@@ -27,10 +28,20 @@ class ViewController: UIViewController {
         return view
     }()
     
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 36, weight: .regular)
+        label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     private lazy var waterLabel: UILabel = {
         let label = UILabel()
-        label.text = String(targetAmount)
-        label.font = .systemFont(ofSize: 36, weight: .regular)
+        label.text = String(remainingAmount)
+        label.numberOfLines = 4
+        label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -43,6 +54,7 @@ class ViewController: UIViewController {
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
+        icon.layer.cornerRadius = 10
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.isUserInteractionEnabled = true
         return icon
@@ -55,6 +67,7 @@ class ViewController: UIViewController {
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
+        icon.layer.cornerRadius = 10
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.isUserInteractionEnabled = true
         return icon
@@ -67,6 +80,7 @@ class ViewController: UIViewController {
         icon.image = image
         icon.tintColor = .white
         icon.contentMode = .scaleAspectFit
+        icon.layer.cornerRadius = 10
         icon.translatesAutoresizingMaskIntoConstraints = false
         icon.isUserInteractionEnabled = true
         return icon
@@ -75,14 +89,21 @@ class ViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
+//        remainingAmount = targetAmount
+        updateAppereance()
         
         view.backgroundColor = .black
         
-        [waterWaveView , containerView, waterLabel].forEach(view.addSubview)
+        [waterWaveView , containerView, waterLabel , titleLabel].forEach(view.addSubview)
         waterWaveView.setupProgress(waterWaveView.progress)
+       
+        titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
         
-        waterLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        waterLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor).isActive = true
         waterLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        waterLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
        
         waterWaveView.widthAnchor.constraint(equalToConstant: screenWidth).isActive = true
         waterWaveView.heightAnchor.constraint(equalToConstant: screenHeight).isActive = true
@@ -113,34 +134,37 @@ class ViewController: UIViewController {
     }
     
     @objc private func handleGestureGlass(_ sender: UITapGestureRecognizer? = nil) {
-        print("tapped")
-        self.waterWaveView.addProgress(200/targetAmount)
-        self.waterWaveView.setupProgress(self.waterWaveView.progress)
-        targetAmount -= 200
-        waterLabel.text = String(targetAmount)
-        print(self.waterWaveView.progress)
+        consumeWater(amount: 200)
     }
     
     @objc private func handleGestureBottle(_ sender: UITapGestureRecognizer? = nil) {
-        print("tapped")
-        self.waterWaveView.addProgress(500/targetAmount)
-        self.waterWaveView.setupProgress(self.waterWaveView.progress)
-        print(self.waterWaveView.progress)
+        consumeWater(amount: 500)
     }
     
     @objc private func handleGestureFlask(_ sender: UITapGestureRecognizer? = nil) {
-        print("tapped")
-        self.waterWaveView.addProgress(800/targetAmount)
-        self.waterWaveView.setupProgress(self.waterWaveView.progress)
-        print(self.waterWaveView.progress)
+        consumeWater(amount: 800)
     }
-    
- 
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
     }
-
+    
+    // MARK: -Functions
+    private func consumeWater(amount:Double) {
+        self.waterWaveView.addProgress(amount/targetAmount)
+        self.waterWaveView.setupProgress(self.waterWaveView.progress)
+//        remainingAmount -= amount
+        waterStore.addWater(amount: amount)
+        updateAppereance()
+    }
+    
+    func updateAppereance() {
+        let currentWaterAmount = waterStore.getCurrentAmount()
+        remainingAmount = targetAmount - currentWaterAmount
+        print(remainingAmount)
+        print(targetAmount)
+        print(currentWaterAmount)
+    }
 
 }
 

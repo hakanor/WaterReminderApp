@@ -30,16 +30,19 @@ class DataService {
     
     // MARK: - Functions
     func getCurrentAmount() -> Double {
+        // içilen su miktarı
         let savedAmount = defaults.double(forKey: "currentAmount")
         return savedAmount
     }
     
     func getLatestUpdateDay() -> Int {
+        // son su içilen gün
         let latestUpdateDay = defaults.integer(forKey: "latestUpdateDay")
         return latestUpdateDay
     }
     
     func addWater(amount: Double) {
+        // en son içtiğin gün ve içilen su değerini arttırmak
         let currentAmount = getCurrentAmount()
         let newAmount = currentAmount + amount
         
