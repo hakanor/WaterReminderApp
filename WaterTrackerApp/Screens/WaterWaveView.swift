@@ -49,9 +49,9 @@ extension WaterWaveView {
         translatesAutoresizingMaskIntoConstraints = false
         layer.masksToBounds = true
         
-        waveHeight = 6.0
-        firstColor = .cyan
-        secondColor = .cyan.withAlphaComponent(0.4)
+        waveHeight = 7.0
+        firstColor = .systemTeal
+        secondColor = .systemTeal.withAlphaComponent(0.4)
         createFirstLayer()
         
         if !showSingleWave {
@@ -80,7 +80,7 @@ extension WaterWaveView {
         percentLabel.font = UIFont.boldSystemFont(ofSize: 35)
         percentLabel.textAlignment = .center
         percentLabel.text = ""
-        percentLabel.textColor = .darkGray
+        percentLabel.textColor = .white.withAlphaComponent(0.7)
         percentLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(percentLabel)
         percentLabel.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
@@ -117,9 +117,7 @@ extension WaterWaveView {
     func setupProgress(_ pr: CGFloat) {
         progress = pr
         percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr*100)).intValue)
-//        percentLabel.text = String(format: "%ld%%", NSNumber(value: Float(pr)).intValue)
         let top: CGFloat = pr * bounds.size.height
-//        let top: CGFloat = pr * bounds.size.height * targetAmount
         firstLayer.setValue(height-top, forKeyPath: "position.y")
         secondLayer.setValue(height-top, forKeyPath: "position.y")
         
