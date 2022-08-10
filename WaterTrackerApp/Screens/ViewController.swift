@@ -151,17 +151,9 @@ class ViewController: UIViewController {
         flaskLabel.topAnchor.constraint(equalTo: flask.bottomAnchor,constant: 10).isActive = true
         flaskLabel.centerXAnchor.constraint(equalTo: flask.centerXAnchor).isActive = true
         
-        let tapGestureBottle = UITapGestureRecognizer(target: self, action:#selector(handleGestureBottle(_:)))
-        bottle.addGestureRecognizer(tapGestureBottle)
-        
-        let tapGestureFlask = UITapGestureRecognizer(target: self, action:#selector(handleGestureFlask(_:)))
-        flask.addGestureRecognizer(tapGestureFlask)
-        
-        let tapGestureGlass = UITapGestureRecognizer(target: self, action:#selector(handleGestureGlass(_:)))
-        glass.addGestureRecognizer(tapGestureGlass)
-        
     }
-    
+  
+    // MARK: -Button Actions
     @objc private func handleGestureGlass(_ sender: UIButton!) {
         consumeWater(amount: 200)
     }
@@ -172,10 +164,6 @@ class ViewController: UIViewController {
     
     @objc private func handleGestureFlask(_ sender: UIButton!) {
         consumeWater(amount: 800)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
     }
     
     // MARK: -Functions
