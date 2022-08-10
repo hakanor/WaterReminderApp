@@ -17,9 +17,6 @@ class ViewController: UIViewController {
     let waterWaveView = WaterWaveView()
     var remainingAmount : Double = 0
     
-    let dr: TimeInterval = 10.0
-    var timer: Timer?
-    
     // MARK: - Subviews
     private lazy var containerView: UIView = {
         let view = UIView()
@@ -28,10 +25,10 @@ class ViewController: UIViewController {
         return view
     }()
     
-    
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 36, weight: .regular)
+        label.numberOfLines = 2
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -40,7 +37,7 @@ class ViewController: UIViewController {
     private lazy var waterLabel: UILabel = {
         let label = UILabel()
         label.text = String(remainingAmount)
-        label.numberOfLines = 4
+        label.numberOfLines = 2
         label.font = .systemFont(ofSize: 18, weight: .regular)
         label.textColor = .white
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -89,10 +86,9 @@ class ViewController: UIViewController {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        remainingAmount = targetAmount
         updateAppereance()
         
-        view.backgroundColor = .black
+        view.backgroundColor = .white
         
         [waterWaveView , containerView, waterLabel , titleLabel].forEach(view.addSubview)
         waterWaveView.setupProgress(waterWaveView.progress)
@@ -153,17 +149,43 @@ class ViewController: UIViewController {
     private func consumeWater(amount:Double) {
         self.waterWaveView.addProgress(amount/targetAmount)
         self.waterWaveView.setupProgress(self.waterWaveView.progress)
-//        remainingAmount -= amount
         waterStore.addWater(amount: amount)
-        updateAppereance()
+        let currentWaterAmount = waterStore.getCurrentAmount()
+        updateLabels(amount: targetAmount - currentWaterAmount)
     }
     
-    func updateAppereance() {
+    private func fillWater(amount:Double) {
+        self.waterWaveView.addProgress(amount/targetAmount)
+        self.waterWaveView.setupProgress(self.waterWaveView.progress)
+    }
+    
+    private func updateAppereance() {
         let currentWaterAmount = waterStore.getCurrentAmount()
+        fillWater(amount: currentWaterAmount)
         remainingAmount = targetAmount - currentWaterAmount
-        print(remainingAmount)
-        print(targetAmount)
-        print(currentWaterAmount)
+        updateLabels(amount: remainingAmount)
+    }
+    
+    private func updateLabels(amount: Double) {
+        let amountToTarget = (amount) / 1000
+        
+        if amount < targetAmount && amount >= 0{
+            let subtitleText = String(format: "Bugünkü su ihtiyacını karşılamak için \n%g litre daha su içmelisin.", amountToTarget)
+            waterLabel.text = subtitleText
+            
+            if amount == 0 {
+                titleLabel.text = "Merhaba! \nBugün su içtin mi?"
+            } else {
+                titleLabel.text = "Tebrikler! \nDoğru yoldasın."
+            }
+        } else if amount < targetAmount && amount < 0 {
+            titleLabel.text = "Muhteşem! \nKendine iyi baktın."
+            waterLabel.text = "Bugün vücüdun için gereken su miktarının tamamını karşıladın."
+        } else {
+            titleLabel.text = "Merhaba! \nBugün su içtin mi?"
+            let subtitleText = String(format: "Bugünkü su ihtiyacını karşılamak için \n%g litre daha su içmelisin.", amountToTarget)
+            waterLabel.text = subtitleText
+        }
     }
 
 }
