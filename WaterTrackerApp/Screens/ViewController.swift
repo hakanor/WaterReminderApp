@@ -233,9 +233,9 @@ class ViewController: UIViewController {
         content.body = body
         content.sound = .default
         
-        let replyAction = UNNotificationAction(identifier: "drink_action", title: "Drink Water (200ml)", options: .init(rawValue: 0))
+        let drinkAction = UNNotificationAction(identifier: "drink_action", title: "Drink Water (200ml)", options: .init(rawValue: 0))
         let cancelAction = UNNotificationAction(identifier: "cancel_action", title: "Cancel", options: .init(rawValue: 1))
-        let actionCategory = UNNotificationCategory(identifier: "actionCategory", actions: [replyAction,cancelAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
+        let actionCategory = UNNotificationCategory(identifier: "actionCategory", actions: [drinkAction,cancelAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
         content.categoryIdentifier = "actionCategory"
         
         var dateComponents = DateComponents()
@@ -251,6 +251,8 @@ class ViewController: UIViewController {
 
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
+        
+        // Delegate
         notificationCenter.delegate = self
         
         notificationCenter.setNotificationCategories([actionCategory])
