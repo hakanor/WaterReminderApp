@@ -218,7 +218,7 @@ class ViewController: UIViewController {
         } else if amount < targetAmount && amount < 0 {
             let currentWaterAmount = waterStore.getCurrentAmount()
             titleLabel.text = "Wonderful! \nMay the force be with you."
-            waterLabel.text = "Well done!. \nYou drank \(currentWaterAmount/1000) liters of water today."
+            waterLabel.text = "Well done! \nYou drank \(currentWaterAmount/1000) liters of water today."
         } else {
             titleLabel.text = "Hello! \nDid you drink water today?"
             let subtitleText = String(format: "You have to drink %glt of water \nto meet daily recommendations.", amountToTarget)
