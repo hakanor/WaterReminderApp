@@ -116,7 +116,8 @@ class ViewController: UIViewController {
         updateAppereance()
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
         })
-        triggerLocalNotification(title: "notification", body: "notification", isScheduled: true)
+        
+        triggerLocalNotification(title: "Did you drink water today?", body: "You drank \(calculateCurrentWater()/1000) liters of water today.", isScheduled: true)
         
         view.backgroundColor = .black
         
@@ -192,6 +193,17 @@ class ViewController: UIViewController {
         updateLabels(amount: remainingAmount)
     }
     
+    private func calculateRemainingWater() -> Double {
+        let currentWaterAmount = waterStore.getCurrentAmount()
+        let remainingAmount = targetAmount - currentWaterAmount
+        return remainingAmount
+    }
+    
+    private func calculateCurrentWater() -> Double {
+        let currentWaterAmount = waterStore.getCurrentAmount()
+        return currentWaterAmount
+    }
+    
     private func updateLabels(amount: Double) {
         let amountToTarget = (amount) / 1000
         
@@ -206,7 +218,7 @@ class ViewController: UIViewController {
         } else if amount < targetAmount && amount < 0 {
             let currentWaterAmount = waterStore.getCurrentAmount()
             titleLabel.text = "Wonderful! \nMay the force be with you."
-            waterLabel.text = "Well done soldier. \nYou drank \(currentWaterAmount/1000) liters of water today."
+            waterLabel.text = "Well done!. \nYou drank \(currentWaterAmount/1000) liters of water today."
         } else {
             titleLabel.text = "Hello! \nDid you drink water today?"
             let subtitleText = String(format: "You have to drink %glt of water \nto meet daily recommendations.", amountToTarget)
@@ -220,13 +232,11 @@ class ViewController: UIViewController {
         content.title = title
         content.body = body
         content.sound = .default
-        content.subtitle = "Subtitle"
-        content.categoryIdentifier = "replyCategory"
         
-        let replyAction = UNNotificationAction(identifier: "reply_action", title: "Reply", options: .init(rawValue: 0))
-        let cancelAction = UNNotificationAction(identifier: "cancel_action", title: "Cancel", options: .init(rawValue: 0))
-        let actionCategory = UNNotificationCategory(identifier: "replyCategory", actions: [replyAction,cancelAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
-        
+        let replyAction = UNNotificationAction(identifier: "drink_action", title: "Drink Water (200ml)", options: .init(rawValue: 0))
+        let cancelAction = UNNotificationAction(identifier: "cancel_action", title: "Cancel", options: .init(rawValue: 1))
+        let actionCategory = UNNotificationCategory(identifier: "actionCategory", actions: [replyAction,cancelAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
+        content.categoryIdentifier = "actionCategory"
         
         var dateComponents = DateComponents()
         dateComponents.minute = 29
@@ -241,6 +251,7 @@ class ViewController: UIViewController {
 
         // Schedule the request with the system.
         let notificationCenter = UNUserNotificationCenter.current()
+        notificationCenter.delegate = self
         
         notificationCenter.setNotificationCategories([actionCategory])
         notificationCenter.add(request) { (error) in
@@ -249,5 +260,24 @@ class ViewController: UIViewController {
            }
         }
       }
+
 }
 
+extension ViewController: UNUserNotificationCenterDelegate {
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        completionHandler([.sound])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        switch response.actionIdentifier {
+        case "drink_action":
+            consumeWater(amount: 200)
+        case "cancel_action":
+            print("cancel_action")
+        default:
+            break
+        }
+        completionHandler()
+    }
+}
