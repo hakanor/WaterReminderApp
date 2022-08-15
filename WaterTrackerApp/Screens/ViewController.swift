@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import UserNotifications
+
 let screenWidth = UIScreen.main.bounds.size.width
 let screenHeight = UIScreen.main.bounds.size.height
 let targetAmount = 2700.0
@@ -112,6 +114,9 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateAppereance()
+        UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge], completionHandler: {didAllow, error in
+        })
+        triggerLocalNotification(title: "notification", body: "notification", isScheduled: true)
         
         view.backgroundColor = .black
         
@@ -208,6 +213,41 @@ class ViewController: UIViewController {
             waterLabel.text = subtitleText
         }
     }
+    
+    func triggerLocalNotification(title: String, body: String, isScheduled: Bool) {
+        
+        let content = UNMutableNotificationContent()
+        content.title = title
+        content.body = body
+        content.sound = .default
+        content.subtitle = "Subtitle"
+        content.categoryIdentifier = "replyCategory"
+        
+        let replyAction = UNNotificationAction(identifier: "reply_action", title: "Reply", options: .init(rawValue: 0))
+        let cancelAction = UNNotificationAction(identifier: "cancel_action", title: "Cancel", options: .init(rawValue: 0))
+        let actionCategory = UNNotificationCategory(identifier: "replyCategory", actions: [replyAction,cancelAction], intentIdentifiers: [], hiddenPreviewsBodyPlaceholder: "", options: .customDismissAction)
+        
+        
+        var dateComponents = DateComponents()
+        dateComponents.minute = 29
+        
+        // Create the trigger as a repeating event.
+//        let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 5, repeats: false)
+        
+        // Create the request
+        let uuidString = UUID().uuidString
+        let request = UNNotificationRequest(identifier: uuidString,content: content, trigger: trigger)
 
+        // Schedule the request with the system.
+        let notificationCenter = UNUserNotificationCenter.current()
+        
+        notificationCenter.setNotificationCategories([actionCategory])
+        notificationCenter.add(request) { (error) in
+           if error != nil {
+               print(error ?? "default")
+           }
+        }
+      }
 }
 
